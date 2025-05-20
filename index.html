@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bubu & Dudu Love Story</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffe6f2;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #mainScreen {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .title {
+            color: #ff3385;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #yesBtn {
+            background: #ff3385;
+            color: white;
+        }
+
+        #noBtn {
+            background: #4d4d4d;
+            color: white;
+            position: relative;
+        }
+
+        #loveScreen {
+            display: none;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff3385;
+            animation: float 3s infinite;
+        }
+
+        .message {
+            font-size: 3em;
+            color: #ff3385;
+            text-align: center;
+            margin-top: 100px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        #storyContainer {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            margin: 50px auto;
+        }
+
+        .character {
+            position: absolute;
+            transition: all 2s;
+        }
+
+        /* Cat Character (Bubu) */
+        #bubu {
+            left: 600px;
+            top: 200px;
+            width: 120px;
+            height: 120px;
+        }
+
+        .cat {
+            position: relative;
+            background: #ff99cc;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .cat-ear {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #ff99cc;
+            top: -15px;
+        }
+
+        .cat-ear.left { left: 10px; }
+        .cat-ear.right { right: 10px; }
+
+        .cat-eye {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #000;
+            border-radius: 50%;
+            top: 35px;
+            transition: all 0.5s;
+        }
+
+        .cat-eye.love {
+            transform: scale(1.2);
+            background: #ff3385;
+            box-shadow: 0 0 10px #ff3385;
+        }
+
+        .cat-eye.love::after {
+            content: '✨';
+            position: absolute;
+            left: -5px;
+            top: -5px;
+            font-size: 20px;
+        }
+
+        .blush {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff99cc;
+            border-radius: 50%;
+            opacity: 0;
+            top: 60px;
+            animation: blush 2s forwards;
+        }
+
+        .blush.left { left: 10px; }
+        .blush.right { right: 10px; }
+
+        /* Bear Character (Dudu) */
+        #dudu {
+            left: 100px;
+            top: 200px;
+            width: 120px;
+            height: 120px;
+        }
+
+        .bear {
+            position: relative;
+            background: #99ccff;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .bear-ear {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #99ccff;
+            border-radius: 50%;
+            top: -10px;
+        }
+
+        .bear-ear.left { left: 10px; }
+        .bear-ear.right { right: 10px; }
+
+        .bear-eye {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+            top: 30px;
+        }
+
+        .bear-eye.left { left: 20px; }
+        .bear-eye.right { right: 20px; }
+
+        .bear-nose {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #4d4d4d;
+            border-radius: 40%;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .flower {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0;
+            transition: all 2s;
+            font-size: 30px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes blush {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div id="mainScreen">
+        <h1 class="title">Are you loving me? 😊</h1>
+        <div class="buttons">
+            <button id="yesBtn">Yes! 😍</button>
+            <button id="noBtn">No 😢</button>
+        </div>
+    </div>
+
+    <div id="loveScreen">
+        <h1 class="message">I love youuu so much! 💖</h1>
+        <div id="storyContainer">
+            <div id="bubu" class="character">
+                <div class="cat">
+                    <div class="cat-ear left"></div>
+                    <div class="cat-ear right"></div>
+                    <div class="cat-eye left"></div>
+                    <div class="cat-eye right"></div>
+                    <div class="cat-nose"></div>
+                </div>
+            </div>
+            <div id="dudu" class="character">
+                <div class="bear">
+                    <div class="bear-ear left"></div>
+                    <div class="bear-ear right"></div>
+                    <div class="bear-eye left"></div>
+                    <div class="bear-eye right"></div>
+                    <div class="bear-nose"></div>
+                </div>
+            </div>
+            <div id="flower" class="flower">🌷</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainScreen = document.getElementById('mainScreen');
+        const loveScreen = document.getElementById('loveScreen');
+
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.transform = `translate(${x - 50}px, ${y - 25}px)`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            mainScreen.style.display = 'none';
+            loveScreen.style.display = 'block';
+            createHearts();
+            startStory();
+        });
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animation = `float ${3 + Math.random() * 2}s infinite`;
+                document.body.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+
+        function startStory() {
+            setTimeout(() => {
+                document.getElementById('dudu').style.left = '400px';
+            }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('flower').style.opacity = '1';
+                document.getElementById('flower').style.left = '420px';
+                document.getElementById('flower').style.top = '220px';
+            }, 3000);
+
+            setTimeout(() => {
+                document.getElementById('dudu').style.top = '250px';
+                document.getElementById('flower').style.top = '270px';
+            }, 5000);
+
+            setTimeout(() => {
+                document.getElementById('flower').style.left = '630px';
+                document.getElementById('flower').style.top = '230px';
+                
+                // Add eye effects and blush
+                const eyes = document.querySelectorAll('#bubu .cat-eye');
+                eyes.forEach(eye => {
+                    eye.classList.add('love');
+                    
+                    // Create blush marks
+                    const blushLeft = document.createElement('div');
+                    blushLeft.className = 'blush left';
+                    const blushRight = document.createElement('div');
+                    blushRight.className = 'blush right';
+                    
+                    document.getElementById('bubu').appendChild(blushLeft);
+                    document.getElementById('bubu').appendChild(blushRight);
+                });
+
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.style.marginTop = '50px';
+                message.innerHTML = 'Love You! 💐';
+                document.getElementById('storyContainer').appendChild(message);
+            }, 7000);
+        }
+    </script>
+</body>
+</html>
